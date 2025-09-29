@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Heritage Platform | AI Assistant</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="ai-assistant">
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-monument"></i>
+        </div>
+        <div class="logo-text">AR Heritage</div>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="heritage.html" class="nav-link">
+          <i class="fas fa-landmark"></i>
+          <span>Heritage</span>
+        </a>
+        <a href="ar-experiences.html" class="nav-link">
+          <i class="fas fa-vr-cardboard"></i>
+          <span>AR Experiences</span>
+        </a>
+        <a href="community.html" class="nav-link">
+          <i class="fas fa-users"></i>
+          <span>Community</span>
+        </a>
+        <a href="ai-assistant.html" class="nav-link active">
+          <i class="fas fa-robot"></i>
+          <span>AI Assistant</span>
+        </a>
+      </nav>
+      
+      </aside>
+    
+    <main class="main-content">
+      <div class="header">
+        <h1 class="page-title">AI Heritage Assistant</h1>
+      </div>
+
+      <div class="ai-assistant-container">
+        <div class="ai-header">
+          <div class="ai-avatar">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="ai-info">
+            <h3>HeritageAI Assistant</h3>
+            <p>Your guide to cultural heritage and AR experiences</p>
+          </div>
+          <div class="ai-status">
+            <div class="status-dot"></div>
+            <span>Online</span>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="message assistant">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <div class="message-text">
+                Hello! I'm your **HeritageAI Assistant**. I can help you explore cultural heritage sites, find AR experiences, answer questions about historical monuments, and guide you through our platform. How can I assist you today?
+              </div>
+              <div class="message-time">Just now</div>
+            </div>
+          </div>
+
+          <div class="message user">
+            <div class="message-avatar">U</div>
+            <div class="message-content">
+              <div class="message-text">
+                Can you show me ancient Roman heritage sites?
+              </div>
+              <div class="message-time">2 minutes ago</div>
+            </div>
+          </div>
+
+          <div class="message assistant">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <div class="message-text">
+                Certainly! We have several Roman heritage sites available:
+                <br><br>
+                • **Colosseum AR Reconstruction**: Experience gladiatorial fights in augmented reality.
+                <br>
+                • **Roman Forum Walking Tour**: A guided AR tour with historical context.
+                <br>
+                • **Pantheon Architectural Analysis**: See the dome's construction in 3D.
+                <br><br>
+                You can find these and more in the **AR Experiences** tab.
+              </div>
+              <div class="message-time">Just now</div>
+            </div>
+          </div>
+          </div>
+
+        <div class="quick-actions">
+          <button class="action-btn" onclick="handleQuickAction('ar')">
+            <i class="fas fa-vr-cardboard"></i> AR Experiences
+          </button>
+          <button class="action-btn" onclick="handleQuickAction('sites')">
+            <i class="fas fa-landmark"></i> Explore Sites
+          </button>
+          <button class="action-btn" onclick="handleQuickAction('events')">
+            <i class="fas fa-calendar"></i> Upcoming Events
+          </button>
+          <button class="action-btn" onclick="handleQuickAction('help')">
+            <i class="fas fa-question-circle"></i> General Help
+          </button>
+        </div>
+
+        <div class="chat-input-container">
+          <textarea id="chatInput" placeholder="Ask HeritageAI a question..." oninput="autoExpand(this)"></textarea>
+          <button id="sendButton" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      
+      <footer class="footer">
+        <p>&copy; 2025 AR Heritage Platform. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // --- AI Chat Logic (Simplified Client-Side Simulation) ---
+    function autoExpand(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
+
+    function sendMessage() {
+      const chatInput = document.getElementById('chatInput');
+      const message = chatInput.value.trim();
+      const sendButton = document.getElementById('sendButton');
+
+      if (message === '') return;
+
+      // 1. Add User Message
+      addMessage(message, 'user');
+
+      // 2. Clear input and simulate processing
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      
+      // Disable send button while processing
+      sendButton.disabled = true;
+
+      // Show typing indicator
+      showTypingIndicator();
+
+      // Simulate AI response after delay
+      setTimeout(() => {
+        removeTypingIndicator();
+        const response = generateAIResponse(message);
+        addMessage(response, 'assistant');
+        sendButton.disabled = false;
+      }, 1500); 
+    }
+
+    function addMessage(text, sender) {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', sender);
+
+      const avatar = sender === 'user' 
+        ? '<div class="message-avatar">U</div>' 
+        : '<div class="message-avatar"><i class="fas fa-robot"></i></div>';
+
+      const content = `
+        <div class="message-content">
+          <div class="message-text">${text}</div>
+          <div class="message-time">Just now</div>
+        </div>
+      `;
+
+      messageDiv.innerHTML = sender === 'user' ? avatar + content : avatar + content;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+    }
+
+    function showTypingIndicator() {
+      const chatMessages = document.getElementById('chatMessages');
+      const typingDiv = document.createElement('div');
+      typingDiv.classList.add('message', 'assistant', 'typing');
+      typingDiv.id = 'typingIndicator';
+      typingDiv.innerHTML = `
+        <div class="message-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+          <div class="message-text">
+            <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+          </div>
+        </div>
+      `;
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const indicator = document.getElementById('typingIndicator');
+      if (indicator) {
+        indicator.remove();
+      }
+    }
+
+    function handleQuickAction(action) {
+      let message = '';
+      switch(action) {
+        case 'ar':
+          message = 'Tell me about the newest AR experiences.';
+          break;
+        case 'sites':
+          message = 'What are the top 5 most popular heritage sites?';
+          break;
+        case 'events':
+          message = 'List upcoming community events.';
+          break;
+        case 'help':
+          message = 'I need general help navigating the platform.';
+          break;
+      }
+      document.getElementById('chatInput').value = message;
+      sendMessage();
+    }
+    
+    // Simple AI response generation logic
+    function generateAIResponse(userMessage) {
+      const lowerMessage = userMessage.toLowerCase();
+      
+      if (lowerMessage.includes('ar') || lowerMessage.includes('experiences')) {
+        return `We have 1.2K+ AR experiences! Check out the **Athens Parthenon Reconstruction** and the **Viking Longship Voyage** in the AR Experiences tab.`;
+      }
+      
+      if (lowerMessage.includes('top 5') || lowerMessage.includes('popular')) {
+        return `Our top 5 popular sites currently are: 
+        <br><br>
+        1. Roman Colosseum
+        <br>
+        2. Machu Picchu
+        <br>
+        3. Great Wall of China
+        <br>
+        4. Giza Pyramids
+        <br>
+        5. Acropolis of Athens
+        <br><br>
+        You can find more details in the **Heritage** tab.`;
+      }
+      
+      if (lowerMessage.includes('events') || lowerMessage.includes('upcoming')) {
+        return `Our next highlighted events are:
+        <br><br>
+        • **Live AR Rome Exploration** (March 12th)
+        <br>
+        • **AR Heritage Workshop** (March 18th)
+        <br><br>
+        Visit the **Community Hub** for a full list and to join!`;
+      }
+
+      if (lowerMessage.includes('help') || lowerMessage.includes('navigate')) {
+        return `Our platform is divided into 5 main sections:
+        <br><br>
+        • **Home**: Overview and featured content
+        <br>
+        • **Heritage**: Full list of sites and categories
+        <br>
+        • **AR Experiences**: Library of all augmented reality content
+        <br>
+        • **Community**: Connect with other heritage enthusiasts
+        <br>
+        • **AI Assistant**: Right here! (for quick Q&A)
+        <br><br>
+        Is there a specific feature you need help with?`;
+      }
+      
+      if (lowerMessage.includes('egypt') || lowerMessage.includes('pyramid')) {
+        return `The Egyptian pyramids are fascinating! We offer:
+        <br><br>
+        • **Great Pyramid AR Tour**: Explore interior chambers and construction techniques
+        <br>
+        • **Sphinx Reconstruction**: See the original colors and features
+        <br>
+        • **Hieroglyphics Translator**: Learn to read ancient Egyptian writing
+        <br><br>
+        The Pyramid of Giza was built around 2560 BC and was the tallest man-made structure for over 3,800 years!`;
+      }
+      
+      // Default response for other queries
+      return `Thank you for your question about "${userMessage}". I'm here to help you explore cultural heritage through augmented reality. 
+      <br><br>
+      I can assist you with:
+      <br>
+      • Finding specific heritage sites and their historical significance
+      <br>
+      • Recommending AR experiences based on your interests
+      <br>
+      • Providing educational content about different civilizations
+      <br>
+      • Helping you navigate our platform features
+      <br><br>
+      Could you tell me more about what you're looking for?`;
+    }
+  </script>
+  <script src="js/script.js"></script>
+</body>
+</html>
